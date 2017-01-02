@@ -21,7 +21,7 @@ namespace DailyChallenge240
         static string Convert(string text)
         {            
             var tList = text.Split(' ');
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             foreach (var w in tList) {
                 sb.Append(Shuffle(w));
@@ -33,7 +33,7 @@ namespace DailyChallenge240
 
         static string Shuffle(string w)
         {
-            Random rnd = new Random();
+            var rnd = new Random();
 
             if (w.Length < 4) {
                 return w;
@@ -41,20 +41,20 @@ namespace DailyChallenge240
 
             char f, l;
             string m, mid;
-            string mOld = w.Substring(1, w.Length - 2);
+            var mOld = w.Substring(1, w.Length - 2);
 
             f = w[0];
             l = w[w.Length - 1];
             m = w.Substring(1, w.Length - 2);            
 
             char[] chars = new char[m.Length];
-            Random rand = new Random();
+            var rand = new Random();
 
             int index = 0;
 
             
                 while (m.Length > 0) {
-                    int next = rand.Next(0, m.Length - 1);
+                    var next = rand.Next(0, m.Length - 1);
                     chars[index] = m[next];
                     m = m.Substring(0, next) + m.Substring(next + 1);
                     ++index;
