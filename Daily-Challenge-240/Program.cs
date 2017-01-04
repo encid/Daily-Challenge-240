@@ -14,7 +14,10 @@ namespace DailyChallenge240
         {
             string input;
             do {
-                Console.WriteLine(Convert("According to a research team at Cambridge University, it doesn't matter in what order he letters in a word are, the only important thing is that the first and last letter be in the right place. The rest can be a total mess and you can still read it without a problem. This is because the human mind does not read every letter by itself, but the word as a whole."));
+                Console.WriteLine(Convert("According to a research team at Cambridge University, it doesn't matter in what order "+
+                    "the letters in a word are, the only important thing is that the first and last letter be in the right place." +
+                    "The rest can be a total mess and you can still read it without a problem. This is because the human mind does " +
+                    "not read every letter by itself, but the word as a whole."));
                 //Console.WriteLine(Convert("human"));
                 Console.WriteLine("Press any key to continue, or type 'x' to exit");
                 input = Console.ReadLine();
