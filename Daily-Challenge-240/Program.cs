@@ -12,10 +12,13 @@ namespace DailyChallenge240
 
         static void Main()
         {
-            Console.WriteLine(Convert("According to a research team at Cambridge University, it doesn't matter in what order he letters in a word are, the only important thing is that the first and last letter be in the right place. The rest can be a total mess and you can still read it without a problem. This is because the human mind does not read every letter by itself, but the word as a whole."));
-            //Console.WriteLine(Convert("fantastical"));
-            Console.ReadKey();
-            
+            string input;
+            do {
+                Console.WriteLine(Convert("According to a research team at Cambridge University, it doesn't matter in what order he letters in a word are, the only important thing is that the first and last letter be in the right place. The rest can be a total mess and you can still read it without a problem. This is because the human mind does not read every letter by itself, but the word as a whole."));
+                //Console.WriteLine(Convert("human"));
+                Console.WriteLine("Press any key to continue, or type 'x' to exit");
+                input = Console.ReadLine();
+            } while (input != "x");            
         }
 
         static string Convert(string text)
@@ -33,7 +36,7 @@ namespace DailyChallenge240
 
         static string Shuffle(string w)
         {
-            var rnd = new Random();
+            var rand = new Random();
 
             if (w.Length < 4) {
                 return w;
@@ -45,23 +48,28 @@ namespace DailyChallenge240
 
             f = w[0];
             l = w[w.Length - 1];
-            m = w.Substring(1, w.Length - 2);            
+            m = w.Substring(1, w.Length - 2);
 
             char[] chars = new char[m.Length];
-            var rand = new Random();
-
             int index = 0;
 
-            
-                while (m.Length > 0) {
-                    var next = rand.Next(0, m.Length - 1);
-                    chars[index] = m[next];
-                    m = m.Substring(0, next) + m.Substring(next + 1);
-                    ++index;
-                }
+            while (m.Length > 0) {
+                var next = rand.Next(0, m.Length);
+                chars[index] = m[next];
+                m = m.Substring(0, next) + m.Substring(next + 1);
+                index++;
+            }
 
-                mid = new string(chars); 
-            
+            mid = new string(chars);
+
+            if (mid == mOld) {
+                char[] ch = mid.ToCharArray();
+                char temp1 = ch[0];
+                char temp2 = ch[ch.Length - 1];
+                ch[0] = temp2;
+                ch[ch.Length - 1] = temp1;
+                mid = new string(ch);
+            }       
 
             return f + mid + l;
         }
