@@ -15,10 +15,10 @@ namespace DailyChallenge240
             string input;
             do {
                 Console.WriteLine(Convert("According to a research team at Cambridge University, it doesn't matter in what order "+
-                    "the letters in a word are, the only important thing is that the first and last letter be in the right place." +
+                    "the letters in a word are, the only important thing is that the first and last letter be in the right place. " +
                     "The rest can be a total mess and you can still read it without a problem. This is because the human mind does " +
                     "not read every letter by itself, but the word as a whole."));
-                //Console.WriteLine(Convert("human"));
+                Console.WriteLine();
                 Console.WriteLine("Press any key to continue, or type 'x' to exit");
                 input = Console.ReadLine();
             } while (input != "x");            
@@ -37,44 +37,45 @@ namespace DailyChallenge240
             return sb.ToString();            
         }
 
-        static string Shuffle(string w)
+        static string Shuffle(string inputWord)
         {
+            if (inputWord.Length < 4) 
+                return inputWord;
+
             var rand = new Random();
+            var midOriginal = inputWord.Substring(1, inputWord.Length - 2);
+            bool addNonAlphaToEnd = false;
 
-            if (w.Length < 4) {
-                return w;
+            char firstChar = inputWord[0];
+            char lastChar = inputWord[inputWord.Length - 1];
+            char lastCharTemp = ' ';
+            string mid = midOriginal;
+                        
+            if (!char.IsLetter(lastChar))   // check if last character of a word is not a letter.
+            {
+                addNonAlphaToEnd = true;
+                lastCharTemp = lastChar;
+                mid = inputWord.Substring(1, inputWord.Length - 3);
+                lastChar = inputWord[inputWord.Length - 2];
             }
 
-            char f, l;
-            string m, mid;
-            var mOld = w.Substring(1, w.Length - 2);
+            string scrambledMid;
+            do {
+                var midChars = mid.ToList();
+                scrambledMid = "";
 
-            f = w[0];
-            l = w[w.Length - 1];
-            m = w.Substring(1, w.Length - 2);
+                while (midChars.Count > 0)
+                {
+                    int i = rand.Next(midChars.Count);
+                    scrambledMid += midChars[i];
+                    midChars.RemoveAt(i);
+                }     
+            } while (scrambledMid == midOriginal);     // loop until the word is scrambled (i.e. not the original word)
 
-            char[] chars = new char[m.Length];
-            int index = 0;
+            if (addNonAlphaToEnd)
+                return firstChar + scrambledMid + lastChar + lastCharTemp;
 
-            while (m.Length > 0) {
-                var next = rand.Next(0, m.Length);
-                chars[index] = m[next];
-                m = m.Substring(0, next) + m.Substring(next + 1);
-                index++;
-            }
-
-            mid = new string(chars);
-
-            if (mid == mOld) {
-                char[] ch = mid.ToCharArray();
-                char temp1 = ch[0];
-                char temp2 = ch[ch.Length - 1];
-                ch[0] = temp2;
-                ch[ch.Length - 1] = temp1;
-                mid = new string(ch);
-            }       
-
-            return f + mid + l;
+            return firstChar + scrambledMid + lastChar;
         }
     }
 }
